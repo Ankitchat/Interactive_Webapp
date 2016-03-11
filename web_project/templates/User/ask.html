@@ -1,0 +1,78 @@
+<html>
+<head>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link href="http://vjs.zencdn.net/5.5.3/video-js.css" rel="stylesheet">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<style>
+		.bottom {
+			padding-bottom:15px;
+    		border-bottom: 1px solid #ccc;
+		}
+		.container-fluid{
+			padding-left:40px;
+			padding-top:20px;
+		}
+		.first-column {
+		  padding-left: 15px;
+		  
+		  float: left;
+		  overflow-y: scroll;
+		}
+		.second-column {
+		  
+		  float: right;
+		  padding-right: 50px;
+		  overflow-y: scroll;
+		  text-align: center;
+		}
+		.row-2{
+			background-color: white;
+		}
+		.row-2:hover {
+		background-color: azure;
+		}
+		form  { display: table;      }
+		p     { display: table-row; padding-bottom: 10px; padding-top: 10px;  }
+		label { display: table-cell; padding-bottom: 10px; padding-top: 10px;}
+		input { display: table-cell; padding-bottom: 10px; padding-top: 10px;}
+		</style>
+<title>Survey</title>
+<h1>Question is</h1>
+</head>
+<body>
+<div class="container-fluid">
+		<div class="row">
+		<br>
+			<div class="col-sm-3">
+			</div>
+	
+			<div class="col-sm-6">
+				{% csrf_token %}
+				<form action="/user/survey/" method="POST">
+				{% csrf_token %}
+				{% for object in question %}
+	<div class="bottom">
+					<h2>{{ object.Question }}</h2>
+					<fieldset id="{{ object.QId }}">
+					  {% for options in choice %}
+						  {% if options.answerto_id == object.QId %}
+						  	<input type="radio" name="{{ object.QId }}" value="{{ options.Choice }}">{{ options.Choice }}<br>
+						  {% endif %}
+					  {% endfor %}
+					 </fieldset>
+	</div>
+				{% endfor %}
+				<br><br>
+					<input align="center" type="submit" value="Submit">
+				</form>
+			</div>
+			<div class="col-sm-3">
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
+
